@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            font-size: 1rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shape Area Calculator</h1>
+        <form id="areaForm">
+            <label for="shapeSelect">Choose a shape:</label>
+            <select id="shapeSelect">
+                <option value="circle">Circle</option>
+                <option value="rectangle">Rectangle</option>
+                <option value="triangle">Triangle</option>
+                <option value="square">Square</option>
+                <option value="parallelogram">Parallelogram</option>
+                <option value="trapezoid">Trapezoid</option>
+                <option value="ellipse">Ellipse</option>
+                <option value="rhombus">Rhombus</option>
+                <option value="hexagon">Hexagon</option>
+                <option value="pentagon">Pentagon</option>
+            </select>
+            <div id="inputFields"></div>
+            <button type="button" onclick="calculateArea()">Calculate Area</button>
+            <p id="result"></p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('shapeSelect').addEventListener('change', updateInputFields);
+
+        function updateInputFields() {
+            const shape = document.getElementById('shapeSelect').value;
+            const inputFields = document.getElementById('inputFields');
+            inputFields.innerHTML = ''; // Clear previous input fields
+
+            if (shape === 'circle') {
+                inputFields.innerHTML = `<label for="radius">Enter the radius:</label>
+                                         <input type="number" id="radius" required>`;
+            } else if (shape === 'rectangle') {
+                inputFields.innerHTML = `<label for="length">Enter the length:</label>
+                                         <input type="number" id="length" required>
+                                         <label for="width">Enter the width:</label>
+                                         <input type="number" id="width" required>`;
+            } else if (shape === 'triangle') {
+                inputFields.innerHTML = `<label for="base">Enter the base:</label>
+                                         <input type="number" id="base" required>
+                                         <label for="height">Enter the height:</label>
+                                         <input type="number" id="height" required>`;
+            } else if (shape === 'square') {
+                inputFields.innerHTML = `<label for="side">Enter the side length:</label>
+                                         <input type="number" id="side" required>`;
+            } else if (shape === 'parallelogram') {
+                inputFields.innerHTML = `<label for="base">Enter the base:</label>
+                                         <input type="number" id="base" required>
+                                         <label for="height">Enter the height:</label>
+                                         <input type="number" id="height" required>`;
+            } else if (shape === 'trapezoid') {
+                inputFields.innerHTML = `<label for="base1">Enter the first base:</label>
+                                         <input type="number" id="base1" required>
+                                         <label for="base2">Enter the second base:</label>
+                                         <input type="number" id="base2" required>
+                                         <label for="height">Enter the height:</label>
+                                         <input type="number" id="height" required>`;
+            } else if (shape === 'ellipse') {
+                inputFields.innerHTML = `<label for="majorAxis">Enter the major axis:</label>
+                                         <input type="number" id="majorAxis" required>
+                                         <label for="minorAxis">Enter the minor axis:</label>
+                                         <input type="number" id="minorAxis" required>`;
+            } else if (shape === 'rhombus') {
+                inputFields.innerHTML = `<label for="diagonal1">Enter the first diagonal:</label>
+                                         <input type="number" id="diagonal1" required>
+                                         <label for="diagonal2">Enter the second diagonal:</label>
+                                         <input type="number" id="diagonal2" required>`;
+            } else if (shape === 'hexagon') {
+                inputFields.innerHTML = `<label for="side">Enter the side length:</label>
+                                         <input type="number" id="side" required>`;
+            } else if (shape === 'pentagon') {
+                inputFields.innerHTML = `<label for="side">Enter the side length:</label>
+                                         <input type="number" id="side" required>
+                                         <label for="apothem">Enter the apothem:</label>
+                                         <input type="number" id="apothem" required>`;
+            }
+        }
+
+        function calculateArea() {
+            const shape = document.getElementById('shapeSelect').value;
+            let area = 0;
+            let validInput = true;
+
+            if (shape === 'circle') {
+                const radius = parseFloat(document.getElementById('radius').value);
+                if (radius > 0) {
+                    area = Math.PI * radius * radius;
+                } else {
+                    validInput = false;
+                }
+            } else if (shape === 'rectangle') {
+                const length = parseFloat(document.getElementById('length').value);
+                const width = parseFloat(document.getElementById('width').value);
+                if (length > 0 && width > 0) {
+                    area = length * width;
+                } else {
+                    validInput = false;
+                }
+            } else if (shape === 'triangle') {
+                const base = parseFloat(document.getElementById('base').value);
+                const height = parseFloat(document.getElementById('height').value);
+                if (base > 0 && height > 0) {
+                    area = 0.5 * base * height;
+                } else {
+                    validInput = false;
+                }
+            } else if (shape === 'square') {
+                const side = parseFloat(document.getElementById('side').value);
+                if (side > 0) {
+                    area = side * side;
+                } else {
+                    validInput = false;
+                }
+            } else if (shape === 'parallelogram') {
+                const base = parseFloat(document.getElementById('base').value);
+                const height = parseFloat(document.getElementById('height').value);
+                if (base > 0 && height > 0) {
+                    area = base * height;
+                } else {
+                    validInput = false;
+                }
+            } else if (shape === 'trapezoid') {
+                const base1 = parseFloat(document.getElementById('base1').value);
+                const base2 = parseFloat(document.getElementById('base2').value);
+                const height = parseFloat(document.getElementById('height').value);
+                if (base1 > 0 && base2 > 0 && height > 0) {
+                    area = 0.5 * (base1 + base2) * height;
+                } else {
+                    validInput = false;
+                }
+            } else if (shape === 'ellipse') {
+                const majorAxis = parseFloat(document.getElementById('majorAxis').value);
+                const minorAxis = parseFloat(document.getElementById('minorAxis').value);
+                if (majorAxis > 0 && minorAxis > 0) {
+                    area = Math.PI * majorAxis * minorAxis;
+                } else {
+                    validInput = false;
+                }
+            } else if (shape === 'rhombus') {
+                const diagonal1 = parseFloat(document.getElementById('diagonal1').value);
+                const diagonal2 = parseFloat(document.getElementById('diagonal2').value);
+                if (diagonal1 > 0 && diagonal2 > 0) {
+                    area = 0.5 * diagonal1 * diagonal2;
+                } else {
+                    validInput = false;
+                }
+            } else if (shape === 'hexagon') {
+                const side = parseFloat(document.getElementById('side').value);
+                if (side > 0) {
+                    area = (3 * Math.sqrt(3) * side * side) / 2;
+                } else {
+                    validInput = false;
+                }
+            } else if (shape === 'pentagon') {
+                const side = parseFloat(document.getElementById('side').value);
+                const apothem = parseFloat(document.getElementById('apothem').value);
+                if (side > 0 && apothem > 0) {
+                    area = (5 * side * apothem) / 2;
+                } else {
+                    validInput = false;
+                }
+            }
+
+            if (validInput) {
+                document.getElementById('result').textContent = `The area of the ${shape} is: ${area.toFixed(2)}`;
+            } else {
+                document.getElementById('result').textContent = "Please enter valid positive values.";
+            }
+        }
+    </script>
+</body>
+</html>
